@@ -1,0 +1,18 @@
+{
+  "id": "/aqualia/",
+  "name": "Aqualia",
+  "short_name": "Aqualia",
+  "description": "Ton petit univers d'organisation",
+  "lang": "fr-FR",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f7fdff",
+  "theme_color": "#e9faff",
+  "categories": [
+    "productivity",
+    "education",
+    "lifestyle"
+  ]
+}
