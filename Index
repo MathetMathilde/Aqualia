@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#e9faff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Aqualia">
+<title>Aqualia</title>
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+:root {
+  --blue:#63c9ed;
+  --deep:#168dbb;
+  --mint:#8ce6cb;
+  --green:#39b995;
+  --violet:#b9a9ed;
+  --ink:#28566b;
+  --muted:#7796a4;
+  --glass:rgba(255,255,255,.76);
+  --line:rgba(84,184,211,.22);
+  --shadow:0 8px 25px rgba(62,164,195,.15);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(ellipse at 10% 0%,#d9f8ff 0,transparent 43%),
+    radial-gradient(ellipse at 90% 25%,#d9fff0 0,transparent 40%),
+    #f7fdff;
+  min-height:100vh;
+  padding-bottom:100px;
+}
+body.dark{
+  --ink:#e1f8ff;--muted:#a5c6d1;
+  --glass:rgba(25,61,77,.85);
+  --line:rgba(137,220,239,.2);
+  background:radial-gradient(ellipse at top,#19485b,#102c3b);
+}
+header{
+  padding:26px 20px 15px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.brand{display:flex;align-items:center;gap:11px}
+.logo{
+  width:47px;height:47px;border-radius:17px;
+  background:linear-gradient(145deg,#fff,#76dcf3 55%,#43c7b0);
+  box-shadow:inset 2px 3px 6px white,0 5px 13px #74cbdc88;
+  display:grid;place-items:center;font-size:25px;
+}
+h1{font-size:25px;margin:0;font-weight:800;letter-spacing:-1px}
+.subtitle{font-size:11px;color:var(--muted);margin-top:3px}
+.glass{
+  background:var(--glass);
+  border:1px solid rgba(255,255,255,.9);
+  border-radius:23px;
+  box-shadow:var(--shadow),inset 0 1px 4px white;
+  backdrop-filter:blur(15px);
+}
+main{padding:8px 16px;max-width:760px;margin:auto}
+.page{display:none;animation:appear .25s ease}
+.page.active{display:block}
+@keyframes appear{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.hero{
+  padding:21px;margin-bottom:16px;
+  background:linear-gradient(135deg,#d9f8ff,#b9f1e3 65%,#e4f4ff);
+  color:#28647a;position:relative;overflow:hidden;
+}
+.hero:after{
+  content:"";position:absolute;width:145px;height:145px;
+  border-radius:50%;right:-25px;top:-45px;
+  background:radial-gradient(circle at 35% 30%,#ffffffd9,#ffffff22 60%,#4bc7e355);
+  border:1px solid #ffffff88;
+}
+.hero h2{font-size:22px;margin:0 0 7px}
+.hero p{font-size:13px;margin:0;line-height:1.5;max-width:75%}
+.section-title{font-size:17px;font-weight:800;margin:22px 3px 12px}
+.card{padding:17px;margin-bottom:13px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.muted{color:var(--muted);font-size:12px}
+.big{font-size:25px;font-weight:800}
+button,input,select,textarea{font:inherit}
+button{
+  border:0;border-radius:14px;padding:11px 15px;
+  background:linear-gradient(145deg,#85dff3,#55c3dc);
+  color:#17556d;font-weight:700;cursor:pointer;
+  box-shadow:0 3px 9px #58bfd444,inset 0 1px 2px white;
+}
+button.secondary{background:#e9f8fb;color:#39788d}
+button.soft{background:#e3f8ef;color:#318a72}
+button.danger{background:#ffe9eb;color:#b44d5a}
+button:active{transform:scale(.97)}
+input,select,textarea{
+  width:100%;padding:12px;border-radius:13px;
+  border:1px solid var(--line);background:#ffffffc9;
+  color:#28566b;outline:none;margin:5px 0 11px;
+}
+textarea{min-height:75px;resize:vertical}
+label{font-size:12px;font-weight:700;color:var(--muted)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.task{
+  display:flex;align-items:center;gap:11px;
+  padding:12px;border-bottom:1px solid var(--line);
+}
+.task:last-child{border:0}
+.task input{width:19px;height:19px;margin:0;accent-color:#45bfa7}
+.task.done .task-name{text-decoration:line-through;opacity:.5}
+.task-name{font-size:13px;font-weight:650;flex:1}
+.pill{
+  background:#e1f8f4;color:#359d88;padding:5px 9px;
+  border-radius:20px;font-size:10px;font-weight:750;
+}
+.tabs{
+  position:fixed;bottom:0;left:0;right:0;z-index:10;
+  display:flex;justify-content:space-around;gap:2px;
+  padding:9px 3px calc(9px + env(safe-area-inset-bottom));
+  background:#effbfcf2;backdrop-filter:blur(18px);
+  border-top:1px solid #bcebf0;
+}
+.tab{
+  background:transparent;box-shadow:none;
+  display:flex;flex-direction:column;align-items:center;
+  gap:4px;padding:6px 3px;flex:1;color:#7398a5;
+  font-size:9px;min-width:0;
+}
+.tab span:first-child{font-size:19px}
+.tab.active{color:#168dbb}
+.tab.active span:first-child{filter:drop-shadow(0 2px 3px #70cce9)}
+.empty{text-align:center;padding:23px;color:var(--muted);font-size:13px}
+.dayline{display:flex;gap:7px;overflow:auto;padding:5px 0 12px}
+.dayline button{flex-shrink:0}
+.dayline button.selected{background:linear-gradient(145deg,#b4f0de,#65cbe5)}
+.hour{
+  display:grid;grid-template-columns:48px 1fr;gap:10px;
+  min-height:54px;border-bottom:1px solid var(--line);
+  padding:8px 0;font-size:11px;color:var(--muted)
+}
+.event{
+  padding:9px 11px;border-radius:12px;
+  background:linear-gradient(110deg,#d8f5ff,#d8f8ed);
+  color:#347b8e;font-size:12px;font-weight:700;
+}
+.event small{display:block;font-weight:400;margin-top:3px}
+.progress{height:8px;background:#dff1f2;border-radius:20px;overflow:hidden;margin:10px 0}
+.progress div{height:100%;background:linear-gradient(90deg,#55c9eb,#69d6ae);border-radius:20px}
+.icon{font-size:22px}
+.small-btn{padding:7px 10px;font-size:11px}
+#toast{
+  position:fixed;top:15px;left:50%;transform:translateX(-50%);
+  background:#28566b;color:white;padding:11px 17px;
+  border-radius:20px;font-size:12px;z-index:20;
+  display:none;box-shadow:var(--shadow)
+}
+body.large{font-size:18px}
+body.large .task-name,body.large .hero p{font-size:15px}
+@media(min-width:600px){main{padding:15px 24px}.hero{padding:28px}}
+</style>
+</head>
+<body>
+<div id="toast"></div>
+<header>
+ <div class="brand">
+  <div class="logo">💧</div>
+  <div><h1>Aqualia</h1><div class="subtitle">Your little world of organisation</div></div>
+ </div>
+ <div style="font-size:25px">🫧</div>
+</header>
+
+<main>
+<section id="home" class="page active">
+ <div class="hero glass">
+  <h2 id="greeting">Bonjour ! ☀️</h2>
+  <p>Un peu d'organisation, beaucoup de sérénité. Ton petit univers commence ici.</p>
+ </div>
+ <div class="card glass">
+  <div class="row"><div><div class="muted">Aujourd'hui</div><div class="big" id="todayDate"></div></div><div class="icon">🌊</div></div>
+  <div class="progress"><div id="dayProgress" style="width:0%"></div></div>
+  <div class="muted" id="progressText">Prête à organiser ta journée ?</div>
+ </div>
+ <div class="section-title">Ton aperçu</div>
+ <div class="row">
+  <div class="card glass" style="flex:1"><div class="icon">📚</div><div class="big" id="homeworkCount">0</div><div class="muted">Devoirs</div></div>
+  <div class="card glass" style="flex:1"><div class="icon">✨</div><div class="big" id="taskCount">0</div><div class="muted">Tâches restantes</div></div>
+ </div>
+ <div class="section-title">À faire aujourd'hui</div>
+ <div class="card glass" id="homeTasks"><div class="empty">Aucune tâche pour le moment 🫧</div></div>
+ <button onclick="go('planning')" style="width:100%">Ouvrir mon planning →</button>
+</section>
+
+<section id="planning" class="page">
+ <div class="hero glass"><h2>Mon planning 🗓️</h2><p>Organise ton temps à ton rythme.</p></div>
+ <div class="card glass">
+  <label>Afficher à partir de</label>
+  <input type="time" id="startTime" value="17:00" onchange="renderPlanning()">
+  <label>Fin de journée</label>
+  <input type="time" id="endTime" value="22:00" onchange="renderPlanning()">
+  <div class="dayline">
+   <button class="selected" id="dayView" onclick="setView('day')">Jour</button>
+   <button class="secondary" id="weekView" onclick="setView('week')">Semaine</button>
+   <button class="secondary" id="monthView" onclick="setView('month')">Mois</button>
+  </div>
+  <div class="row"><button class="secondary small-btn" onclick="changeDate(-1)">←</button><strong id="selectedDate"></strong><button class="secondary small-btn" onclick="changeDate(1)">→</button></div>
+ </div>
+ <div class="card glass" id="calendar"></div>
+ <div class="section-title">Ajouter une activité</div>
+ <div class="card glass">
+  <label>Nom de l'activité</label><input id="taskTitle" placeholder="Ex : Réviser les maths">
+  <div class="form-grid">
+   <div><label>Début</label><input type="time" id="taskStart" value="17:30"></div>
+   <div><label>Durée (minutes)</label><input type="number" id="taskDuration" value="30" min="5"></div>
+  </div>
+  <label>Catégorie</label>
+  <select id="taskCategory"><option>Personnel</option><option>École</option><option>Gaming</option><option>Hobby</option><option>Pause</option></select>
+  <button onclick="addTask()">Ajouter au planning</button>
+ </div>
+</section>
+
+<section id="assistant" class="page">
+ <div class="hero glass"><h2>Aqualia Assistant ✨</h2><p>Décris ce que tu dois faire. Je peux t'aider à organiser tes tâches.</p></div>
+ <div class="card glass">
+  <label>Que souhaites-tu organiser ?</label>
+  <textarea id="assistantText" placeholder="Ex : Je dois faire mes maths pendant 30 minutes et lire pendant 20 minutes..."></textarea>
+  <button onclick="assistantPlan()">Organiser mes tâches</button>
+ </div>
+ <div class="section-title">Comment ça marche ?</div>
+ <div class="card glass">
+  <p style="font-size:13px;line-height:1.6">L'assistant utilise des règles locales pour reconnaître certaines durées et activités. Il ne contacte aucun service externe. Il te propose des tâches que tu peux ensuite ajouter à ton planning.</p>
+ </div>
+ <div id="assistantResult"></div>
+</section>
+
+<section id="gaming" class="page">
+ <div class="hero glass"><h2>Gaming 🎮</h2><p>Les quêtes, objectifs et aventures que tu veux suivre.</p></div>
+ <div class="card glass">
+  <label>Nom du jeu</label><input id="gameName" placeholder="Ex : Dragon Quest Builders 2">
+  <label>Objectif ou quête</label><input id="gameGoal" placeholder="Ex : Terminer la construction du château">
+  <button onclick="addGame()">Ajouter un objectif</button>
+ </div>
+ <div id="gameList"></div>
+</section>
+
+<section id="projects" class="page">
+ <div class="hero glass"><h2>Mes projets 🌱</h2><p>Cosplay, développement, lecture, hobbies et idées.</p></div>
+ <div class="card glass">
+  <label>Nom du projet</label><input id="projectName" placeholder="Ex : Développer mon jeu">
+  <label>Type</label><select id="projectType"><option>Création</option><option>Cosplay</option><option>Développement</option><option>Lecture</option><option>Sport</option><option>Autre</option></select>
+  <label>Première étape</label><input id="projectStep" placeholder="Ex : Préparer les ressources">
+  <button onclick="addProject()">Créer le projet</button>
+ </div>
+ <div id="projectList"></div>
+</section>
+
+<section id="homework" class="page">
+ <div class="hero glass"><h2>Mes devoirs 📚</h2><p>Garde une vue claire sur ton travail scolaire.</p></div>
+ <div class="card glass">
+  <label>Matière</label><input id="subject" placeholder="Ex : Mathématiques">
+  <label>Travail à faire</label><input id="homeworkTitle" placeholder="Ex : Exercices 12 à 15">
+  <div class="form-grid">
+   <div><label>Pour le</label><input id="homeworkDate" type="date"></div>
+   <div><label>Durée estimée</label><input id="homeworkDuration" type="number" value="30" min="5"></div>
+  </div>
+  <button onclick="addHomework()">Ajouter le devoir</button>
+ </div>
+ <div id="homeworkList"></div>
+</section>
+
+<section id="settings" class="page">
+ <div class="hero glass"><h2>Réglages ⚙️</h2><p>Personnalise ton petit univers.</p></div>
+ <div class="card glass">
+  <div class="row"><strong>Mode sombre</strong><button class="secondary" onclick="toggleDark()">Changer</button></div>
+  <hr style="border:0;border-top:1px solid var(--line);margin:15px 0">
+  <div class="row"><strong>Texte plus grand</strong><button class="secondary" onclick="toggleLarge()">Changer</button></div>
+ </div>
+ <div class="card glass">
+  <strong>Sauvegarde de tes données</strong>
+  <p class="muted">Tes informations sont stockées dans le navigateur de cet iPhone.</p>
+  <button onclick="exportData()">Exporter mes données</button>
+  <label style="display:block;margin-top:15px">Importer une sauvegarde</label>
+  <input type="file" id="importFile" accept=".json">
+  <button class="secondary" onclick="importData()">Importer</button>
+ </div>
+ <div class="card glass">
+  <strong>À propos d'Aqualia</strong>
+  <p class="muted">Version 1.0 — Une application personnelle, locale et sans API externe.</p>
+  <button class="danger" onclick="clearData()">Effacer toutes mes données</button>
+ </div>
+</section>
+</main>
+
+<nav class="tabs">
+ <button class="tab active" onclick="go('home',this)"><span>🏠</span><span>Accueil</span></button>
+ <button class="tab" onclick="go('planning',this)"><span>🗓️</span><span>Planning</span></button>
+ <button class="tab" onclick="go('assistant',this)"><span>✨</span><span>Assistant</span></button>
+ <button class="tab" onclick="go('gaming',this)"><span>🎮</span><span>Gaming</span></button>
+ <button class="tab" onclick="go('projects',this)"><span>🌱</span><span>Projets</span></button>
+ <button class="tab" onclick="go('homework',this)"><span>📚</span><span>Devoirs</span></button>
+ <button class="tab" onclick="go('settings',this)"><span>⚙️</span><span>Réglages</span></button>
+</nav>
+
+<script>
+const KEY="aqualia-data-v1";
+let data=JSON.parse(localStorage.getItem(KEY)||'{"tasks":[],"games":[],"projects":[],"homework":[]}');
+let selected=new Date();let view="day";
+
+function save(){localStorage.setItem(KEY,JSON.stringify(data));refresh()}
+function toast(msg){let t=document.getElementById("toast");t.textContent=msg;t.style.display="block";setTimeout(()=>t.style.display="none",2200)}
+function go(id,btn){
+ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+ document.getElementById(id).classList.add("active");
+ document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+ let tab=btn||[...document.querySelectorAll(".tab")].find(t=>t.getAttribute("onclick").includes("'"+id+"'"));
+ if(tab)tab.classList.add("active");
+ refresh();
+}
+function today(){return new Date().toISOString().slice(0,10)}
+function dateString(d){return d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long"})}
+function addTask(){
+ let title=taskTitle.value.trim(),start=taskStart.value,duration=Number(taskDuration.value);
+ if(!title||!start||duration<1)return toast("Complète les informations !");
+ let date=selected.toISOString().slice(0,10);
+ data.tasks.push({id:Date.now(),title,start,duration,category:taskCategory.value,date,done:false});
+ taskTitle.value="";save();toast("Activité ajoutée !");
+}
+function taskHTML(t){
+ return `<div class="task ${t.done?'done':''}">
+ <input type="checkbox" ${t.done?'checked':''} onchange="toggleTask(${t.id})">
+ <div class="task-name">${escapeHTML(t.title)}<div class="muted">${t.start||''} · ${t.duration||0} min · ${escapeHTML(t.category||'')}</div></div>
+ <button class="danger small-btn" onclick="deleteItem('tasks',${t.id})">×</button></div>`;
+}
+function toggleTask(id){let t=data.tasks.find(x=>x.id===id);if(t)t.done=!t.done;save()}
+function deleteItem(type,id){data[type]=data[type].filter(x=>x.id!==id);save();toast("Supprimé")}
+function setView(v){view=v;["day","week","month"].forEach(x=>{let b=document.getElementById(x+"View");b.className=x===v?"":"secondary"});renderPlanning()}
+function changeDate(n){if(view==="month")selected.setMonth(selected.getMonth()+n);else selected.setDate(selected.getDate()+n);renderPlanning()}
+function renderPlanning(){
+ let date=selected.toISOString().slice(0,10);
+ selectedDate.textContent=dateString(selected);
+ let tasks=data.tasks.filter(t=>t.date===date).sort((a,b)=>a.start.localeCompare(b.start));
+ let start=startTime.value||"17:00",end=endTime.value||"22:00";
+ if(view==="day"){
+  let a=Number(start.split(":")[0]),b=Number(end.split(":")[0]);
+  if(b<a)b=24;
+  let html="";
+  for(let h=a;h<=b;h++){
+   let time=String(h%24).padStart(2,"0")+":00";
+   let matching=tasks.filter(t=>Number(t.start.split(":")[0])===h%24);
+   html+=`<div class="hour"><span>${time}</span><div>${matching.map(t=>`<div class="event">${escapeHTML(t.title)}<small>${t.duration} min · ${escapeHTML(t.category)}</small></div>`).join("")}</div></div>`;
+  }
+  calendar.innerHTML=html||'<div class="empty">Aucune activité</div>';
+ }else if(view==="week"){
+  let monday=new Date(selected);monday.setDate(monday.getDate()-(monday.getDay()+6)%7);
+  let html="";
+  for(let i=0;i<7;i++){let d=new Date(monday);d.setDate(d.getDate()+i);let key=d.toISOString().slice(0,10);let ts=data.tasks.filter(t=>t.date===key);html+=`<p><strong>${dateString(d)}</strong></p>${ts.length?ts.map(t=>`<div class="event">${t.start} — ${escapeHTML(t.title)}</div>`).join(""):'<div class="muted">Rien de prévu</div>'}`}
+  calendar.innerHTML=html;
+ }else{
+  let first=new Date(selected.getFullYear(),selected.getMonth(),1),days=new Date(selected.getFullYear(),selected.getMonth()+1,0).getDate();
+  let html=`<div class="big">${first.toLocaleDateString("fr-FR",{month:"long",year:"numeric"})}</div><div style="display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:12px">`;
+  for(let i=0;i<first.getDay()+6?((first.getDay()+6)%7):0;i++)html+="<span></span>";
+  for(let d=1;d<=days;d++){let key=new Date(selected.getFullYear(),selected.getMonth(),d).toISOString().slice(0,10);let count=data.tasks.filter(t=>t.date===key).length;html+=`<button class="secondary small-btn" onclick="selected=new Date(${selected.getFullYear()},${selected.getMonth()},${d});setView('day')">${d}${count?' •':''}</button>`}
+  calendar.innerHTML=html+"</div>";
+ }
+}
+function assistantPlan(){
+ let raw=assistantText.value.trim();if(!raw)return toast("Écris ce que tu dois faire !");
+ let pieces=raw.split(/\s+(?:et|puis|ensuite|,)\s+/i),proposals=[];
+ pieces.forEach(p=>{
+  let match=p.match(/(\d+)\s*(?:min|minutes?)/i),duration=match?Number(match[1]):30;
+  let title=p.replace(/pendant\s+\d+\s*(?:min|minutes?)/i,"").trim();
+  if(title.length>2)proposals.push({title,duration});
+ });
+ if(!proposals.length)proposals.push({title:raw,duration:30});
+ assistantResult.innerHTML='<div class="card glass"><strong>Voici mes propositions</strong>'+proposals.map((p,i)=>`<div class="task"><span class="task-name">${escapeHTML(p.title)} · ${p.duration} min</span><button class="small-btn" onclick="acceptProposal(${i})">Ajouter</button></div>`).join("")+'</div>';
+ window.proposals=proposals;
+}
+function acceptProposal(i){
+ let p=window.proposals[i],start=taskStart.value||"17:00";
+ data.tasks.push({id:Date.now(),title:p.title,start,duration:p.duration,category:"Personnel",date:selected.toISOString().slice(0,10),done:false});
+ let mins=Number(start.slice(0,2))*60+Number(start.slice(3))+p.duration;
+ taskStart.value=String(Math.floor(mins/60)%24).padStart(2,"0")+":"+String(mins%60).padStart(2,"0");
+ save();toast("Ajouté au planning !");
+}
+function addGame(){
+ let name=gameName.value.trim(),goal=gameGoal.value.trim();if(!name||!goal)return toast("Complète les deux champs");
+ data.games.push({id:Date.now(),name,goal,done:false});gameName.value="";gameGoal.value="";save();
+}
+function addProject(){
+ let name=projectName.value.trim(),step=projectStep.value.trim();if(!name)return toast("Donne un nom au projet");
+ data.projects.push({id:Date.now(),name,type:projectType.value,steps:step?[{name:step,done:false}]:[]});projectName.value="";projectStep.value="";save();
+}
+function addHomework(){
+ let subjectValue=subject.value.trim(),title=homeworkTitle.value.trim();
+ if(!subjectValue||!title)return toast("Complète les informations");
+ data.homework.push({id:Date.now(),subject:subjectValue,title,date:homeworkDate.value,duration:Number(homeworkDuration.value),done:false});
+ homeworkTitle.value="";save();toast("Devoir ajouté !");
+}
+function renderLists(){
+ gameList.innerHTML=data.games.length?data.games.map(g=>`<div class="card glass"><div class="row"><strong>🎮 ${escapeHTML(g.name)}</strong><input type="checkbox" style="width:20px" ${g.done?'checked':''} onchange="toggleEntry('games',${g.id})"></div><p class="muted">${escapeHTML(g.goal)}</p><button class="danger small-btn" onclick="deleteItem('games',${g.id})">Supprimer</button></div>`).join(""):'<div class="empty">Aucun objectif pour le moment</div>';
+ projectList.innerHTML=data.projects.length?data.projects.map(p=>`<div class="card glass"><strong>🌱 ${escapeHTML(p.name)}</strong><div class="muted">${escapeHTML(p.type)}</div>${p.steps.map((s,i)=>`<div class="task"><input type="checkbox" ${s.done?'checked':''} onchange="toggleStep(${p.id},${i})"><span class="task-name">${escapeHTML(s.name)}</span></div>`).join("")}<button class="secondary small-btn" onclick="addStep(${p.id})">+ Étape</button> <button class="danger small-btn" onclick="deleteItem('projects',${p.id})">Supprimer</button></div>`).join(""):'<div class="empty">Tes projets apparaîtront ici</div>';
+ homeworkList.innerHTML=data.homework.length?data.homework.map(h=>`<div class="card glass"><div class="row"><strong>${escapeHTML(h.subject)}</strong><span class="pill">${h.date||"Sans date"}</span></div><p>${escapeHTML(h.title)}</p><div class="muted">${h.duration} minutes</div><div class="row"><label><input type="checkbox" style="width:17px" ${h.done?'checked':''} onchange="toggleEntry('homework',${h.id})"> Terminé</label><button class="danger small-btn" onclick="deleteItem('homework',${h.id})">Supprimer</button></div></div>`).join(""):'<div class="empty">Aucun devoir enregistré 📚</div>';
+}
+function toggleEntry(type,id){let x=data[type].find(a=>a.id===id);if(x)x.done=!x.done;save()}
+function toggleStep(id,i){let p=data.projects.find(x=>x.id===id);p.steps[i].done=!p.steps[i].done;save()}
+function addStep(id){let name=prompt("Nom de la nouvelle étape :");if(name){data.projects.find(x=>x.id===id).steps.push({name,done:false});save()}}
+function refresh(){
+ renderLists();
+ let date=today(),todayTasks=data.tasks.filter(t=>t.date===date);
+ homeworkCount.textContent=data.homework.filter(h=>!h.done).length;
+ taskCount.textContent=todayTasks.filter(t=>!t.done).length;
+ homeTasks.innerHTML=todayTasks.length?todayTasks.map(taskHTML).join(""):'<div class="empty">Aucune tâche pour le moment 🫧</div>';
+ let done=todayTasks.filter(t=>t.done).length;
+ dayProgress.style.width=(todayTasks.length?done/todayTasks.length*100:0)+"%";
+ progressText.textContent=todayTasks.length?`${done} tâche(s) terminée(s) sur ${todayTasks.length}`:"Prête à organiser ta journée ?";
+ renderPlanning();
+}
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function toggleDark(){document.body.classList.toggle("dark");localStorage.setItem("aqualia-dark",document.body.classList.contains("dark"))}
+function toggleLarge(){document.body.classList.toggle("large")}
+function exportData(){
+ let blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");
+ a.href=url;a.download="aqualia-sauvegarde.json";a.click();URL.revokeObjectURL(url);
+}
+function importData(){
+ let file=importFile.files[0];if(!file)return toast("Choisis un fichier");
+ let r=new FileReader();r.onload=()=>{try{data=JSON.parse(r.result);save();toast("Sauvegarde importée !")}catch(e){toast("Fichier invalide")}};r.readAsText(file);
+}
+function clearData(){if(confirm("Effacer toutes tes données Aqualia ?")){data={tasks:[],games:[],projects:[],homework:[]};save();toast("Données effacées")}}
+document.body.classList.toggle("dark",localStorage.getItem("aqualia-dark")==="true");
+let now=new Date();
+greeting.textContent=now.getHours()<18?"Bonjour ! ☀️":"Bonsoir ! 🌙";
+todayDate.textContent=now.toLocaleDateString("fr-FR",{day:"numeric",month:"long"});
+refresh();
+if("serviceWorker" in navigator && location.protocol.startsWith("http"))navigator.serviceWorker.register("sw.js").catch(()=>{});
+</script>
+</body>
+</html>
